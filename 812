@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+#include <functional> // 為了使用 std::hash
+
+// 自定義的 StringToInt 函數
+unsigned int StringToInt(const std::string& s) {
+    int length = s.length();
+    unsigned int answer = 0;
+
+    if (length % 2 == 1) {
+        answer = s.at(length - 1);
+        length--;
+    }
+
+    for (int i = 0; i < length; i += 2) {
+        answer += s.at(i);
+        answer += ((int)s.at(i + 1)) << 8;
+    }
+
+    return answer;
+}
+
+// 特化 std::hash<string>
+namespace std {
+    template <>
+    struct hash<std::string> {
+        size_t operator()(const std::string& theKey) const {
+            unsigned long hashValue = 0;
+            int length = theKey.length();
+
+            for (int i = 0; i < length; i++) {
+                hashValue = 5 * hashValue + theKey.at(i);
+            }
+
+            return size_t(hashValue);
+        }
+    };
+}
+
+int main() {
+    std::string testStrings[] = { "abc", "hello", "world", "chatgpt", "hash" };
+
+    for (const std::string& s : testStrings) {
+        unsigned int intValue = StringToInt(s);
+        size_t hashValue = std::hash<std::string>{}(s);
+
+        std::cout << "String: \"" << s << "\"\n";
+        std::cout << "  StringToInt: " << intValue << "\n";
+        std::cout << "  std::hash<string>: " << hashValue << "\n";
+        std::cout << "-------------------------\n";
+    }
+
+    return 0;
+}
