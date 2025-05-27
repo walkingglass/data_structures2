@@ -1,0 +1,59 @@
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Node {
+    int key;
+    Node* left;
+    Node* right;
+    Node(int k) : key(k), left(nullptr), right(nullptr) {}
+};
+
+class BST {
+public:
+    Node* root = nullptr;
+
+    void insert(int key) {
+        root = insert(root, key);
+    }
+
+    int height() {
+        return height(root);
+    }
+
+private:
+    Node* insert(Node* node, int key) {
+        if (!node) return new Node(key);
+        if (key < node->key)
+            node->left = insert(node->left, key);
+        else
+            node->right = insert(node->right, key);
+        return node;
+    }
+
+    int height(Node* node) {
+        if (!node) return 0;
+        return 1 + max(height(node->left), height(node->right));
+    }
+};
+
+int main() {
+    srand(time(0));
+    vector<int> sizes = {100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000};
+
+    for (int n : sizes) {
+        BST tree;
+        for (int i = 0; i < n; ++i) {
+            tree.insert(rand());
+        }
+        int h = tree.height();
+        double ratio = h / log2(n);
+        cout << "n = " << n << ", height = " << h << ", ratio = " << ratio << endl;
+    }
+
+    return 0;
+}
