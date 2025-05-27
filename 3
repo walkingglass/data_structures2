@@ -1,0 +1,15 @@
+Node* deleteNode(Node* root, int k) {
+    if (!root) return nullptr;
+    if (k < root->key) root->left = deleteNode(root->left, k);
+    else if (k > root->key) root->right = deleteNode(root->right, k);
+    else {
+        if (!root->left) return root->right;
+        if (!root->right) return root->left;
+
+        Node* minNode = root->right;
+        while (minNode->left) minNode = minNode->left;
+        root->key = minNode->key;
+        root->right = deleteNode(root->right, minNode->key);
+    }
+    return root;
+}
