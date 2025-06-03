@@ -151,6 +151,3 @@ Will there always be a value of k for which t_cpu < t_input?
 
 
 ---
-
-如果你需要這些問題的完整程式實作、模擬或繪圖，我可以進一步幫你補上！是否需要？
-
