@@ -114,3 +114,4 @@ t_cpu < t_input
 
 - 選擇適當的 `k` 可最佳化 I/O 效能與資源使用。
 
+![image](https://github.com/walkingglass/data_structures2/blob/main/src/%E4%B8%8B%E8%BC%89.png)
