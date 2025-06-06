@@ -2,7 +2,6 @@
 #include <stdexcept>
 #include <algorithm>
 
-
 template <class T>
 class MinPQ {
 public:
@@ -53,7 +52,7 @@ public:
     }
 
     const T& Top() const override {
-        if (IsEmpty()) throw std::runtime_error("Heap is empty");
+        if (IsEmpty()) throw std::out_of_range("堆為空");
         return heap[0];
     }
 
@@ -63,14 +62,11 @@ public:
     }
 
     void Pop() override {
-        if (IsEmpty()) throw std::runtime_error("Heap is empty");
+        if (IsEmpty()) throw std::out_of_range("堆為空");
         heap[0] = heap.back();
         heap.pop_back();
-        HeapifyDown(0);
+        if (!heap.empty()) {
+            HeapifyDown(0);
+        }
     }
 };
-
-int main()
-{
-    return 0;
-}
